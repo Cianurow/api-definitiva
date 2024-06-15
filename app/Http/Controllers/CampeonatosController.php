@@ -16,6 +16,18 @@ class CampeonatosController
         return $campeonatos;
     }
 
+    public function show($id)
+    {
+        $campeonato = Campeonato::select('nombre', 'fecha_inicio', 'fecha_termino', 'reglas', 'premios')
+            ->find($id);
+
+        if (!$campeonato) {
+            return response()->json(['error' => 'Campeonato no encontrado'], 404);
+        }
+
+        return response()->json($campeonato);
+    }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -29,16 +41,19 @@ class CampeonatosController
      */
     public function store(Request $request)
     {
-        //
+        $campeonato = new Campeonato();
+        $campeonato->nombre = $request->nombre;
+        $campeonato->fecha_inicio = $request->fecha_inicio;
+        $campeonato->fecha_termino = $request->fecha_termino;
+        $campeonato->reglas = $request->reglas;
+        $campeonato->premios = $request->premios;
+        $campeonato->save();
+        return $campeonato;
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Campeonato $campeonato)
-    {
-        return $campeonato;
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -61,6 +76,6 @@ class CampeonatosController
      */
     public function destroy(Campeonato $campeonato)
     {
-        //
+        return $campeonato->delete();
     }
 }

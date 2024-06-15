@@ -22,9 +22,14 @@ class Equipo extends Model
     {
         return $this->hasMany(Jugador::class);
     }
-    public function partidos(): BelongsToMany
+    public function partidosLocal()
     {
-        return $this->BelongsToMany(Partido::class);
+        return $this->hasMany(Partido::class, 'equipo_local_id');
+    }
+
+    public function partidosVisitante()
+    {
+        return $this->hasMany(Partido::class, 'equipo_visitante_id');
     }
 
     public function campeonatos(): BelongsToMany

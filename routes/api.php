@@ -28,11 +28,21 @@ Route::resource('/jugadores', JugadoresController::class);
 Route::resource('/partidos', PartidosController::class);
 Route::resource('/campeonatos', CampeonatosController::class);
 Route::resource('/resultados', ResultadosController::class);
+
 Route::put('/partidos/{id}', [PartidosController::class, 'update']);
 Route::delete('/partidos/{id}', [PartidosController::class, 'destroy']);
 Route::post('/partidos', [PartidosController::class, 'store']);
+
 Route::put('/resultados/{id}', [ResultadosController::class, 'update']);
 Route::delete('/resultados/{id}', [ResultadosController::class, 'destroy']);
 Route::post('/resultados', [ResultadosController::class, 'store']);
-Route::get('/campeonatos/{id}/equipos', [CampeonatosController::class, 'equipos']);
 
+Route::get('/campeonatos/{id}/equipos', [CampeonatosController::class, 'equipos']);
+Route::post('/campeonatos', [CampeonatosController::class, 'store']);
+Route::delete('/campeonatos', [CampeonatosController::class, 'destroy']);
+
+Route::post('/equipos', [EquiposController::class, 'store']);
+Route::delete('/equipos/{id}', [EquiposController::class, 'destroy']);
+
+Route::post('/jugadores', [JugadoresController::class, 'store']);
+Route::delete('/jugadores/{id}', [JugadoresController::class, 'destroy']);

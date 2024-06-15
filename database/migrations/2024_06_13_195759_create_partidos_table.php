@@ -20,10 +20,12 @@ return new class extends Migration
             $table->boolean('jugado')->default(false);            
             $table->unsignedBigInteger('campeonato_id')->nullable(false);
 
-            $table->foreign('campeonato_id')->references('id')->on('campeonatos');
-            $table->foreignId('equipo_local_id')->constrained('equipos');
-            $table->foreignId('equipo_visitante_id')->constrained('equipos');
-            //$table->timestamps();
+            $table->foreign('campeonato_id')->references('id')->on('campeonatos')->onDelete('cascade');
+            $table->foreignId('equipo_local_id')->constrained('equipos')->onDelete('cascade');
+            $table->foreignId('equipo_visitante_id')->constrained('equipos')->onDelete('cascade');
+            
+            $table->timestamps();
+
         });
     }
 

@@ -29,7 +29,12 @@ class EquiposController
      */
     public function store(Request $request)
     {
-        //
+
+        $equipo = new Equipo();
+        $equipo->nombre = $request->nombre;
+        $equipo->juegos = $request->juegos;
+        $equipo->save();
+        return $equipo;
     }
 
     /**
@@ -61,6 +66,17 @@ class EquiposController
      */
     public function destroy(Equipo $equipo)
     {
-        //
+        try {
+            // Eliminar los partidos donde el equipo es local o visitante
+            Partido::where('equipo_local_id', $equipo->id)->delete();
+            Partido::where('equipo_visitante_id', $equipo->id)->delete();
+            
+            // Eliminar el equipo
+            $equipo->delete();
+            
+            return response()->json(['message' => 'Equipo eliminado exitosamente'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Error al eliminar el equipo: ' . $e->getMessage()], 500);
+        }
     }
 }

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Jugador;
 use Illuminate\Http\Request;
 
-class JugadoresController
+class JugadoresController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -38,8 +38,16 @@ class JugadoresController
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        //
+    {   
+        $jugador = new Jugador();
+        $jugador->rut = $request->rut;
+        $jugador->nombre = $request->nombre;
+        $jugador->apellido = $request->apellido;
+        $jugador->posicion = $request->posicion;
+        $jugador->equipo_id = $request->equipo_id;
+        $jugador->save();
+        return $jugador;
+
     }
 
     /**
@@ -71,6 +79,6 @@ class JugadoresController
      */
     public function destroy(Jugador $jugador)
     {
-        //
+        return $jugador->delete();
     }
 }
